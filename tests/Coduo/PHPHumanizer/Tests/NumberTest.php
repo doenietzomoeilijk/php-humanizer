@@ -28,6 +28,16 @@ class NumberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider ordinalSuffixDutchAltProvider
+     * @param $expected
+     * @param $number
+     */
+    public function test_return_ordinal_suffix_dutch_alt($expected, $number)
+    {
+        $this->assertEquals($expected, Number::ordinal($number, 'nl_NL'));
+    }
+
+    /**
      * @dataProvider ordinalizeDataProvider
      * @depends test_return_ordinal_suffix
      *
@@ -49,6 +59,18 @@ class NumberTest extends \PHPUnit_Framework_TestCase
     public function test_ordinalize_numbers_dutch($expected, $number)
     {
         $this->assertEquals($expected, Number::ordinalize($number, 'nl'));
+    }
+
+    /**
+     * @dataProvider ordinalizeDataDutchAltProvider
+     * @depends test_return_ordinal_suffix_dutch_alt
+     *
+     * @param $expected
+     * @param $number
+     */
+    public function test_ordinalize_numbers_dutch_alt($expected, $number)
+    {
+        $this->assertEquals($expected, Number::ordinalize($number, 'nl_NL'));
     }
 
     /**
@@ -195,6 +217,22 @@ class NumberTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
+    public function ordinalizeDataDutchAltProvider()
+    {
+        return array(
+            array('1ste', 1),
+            array('2de', 2),
+            array('11de', 11),
+            array('8ste', 8),
+            array('23ste', 23),
+            array('1002de', 1002),
+            array('-111de', -111),
+        );
+    }
+
+    /**
+     * @return array
+     */
     public function ordinalSuffixProvider()
     {
         return array(
@@ -217,6 +255,22 @@ class NumberTest extends \PHPUnit_Framework_TestCase
             array('e', 23),
             array('e', 1002),
             array('e', -111),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function ordinalSuffixDutchAltProvider()
+    {
+        return array(
+            array('ste', 1),
+            array('de', 11),
+            array('de', 2),
+            array('ste', 8),
+            array('ste', 23),
+            array('de', 1002),
+            array('de', -111),
         );
     }
 
